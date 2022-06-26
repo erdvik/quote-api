@@ -8,3 +8,10 @@ const PORT = process.env.PORT || 4001;
 
 app.use(express.static('public'));
 
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+
+app.get('/api/quotes/random', (req, res, next) => {
+    const randomQuote = getRandomElement(quotes);
+    console.log(randomQuote);
+    res.send(randomQuote);
+});
