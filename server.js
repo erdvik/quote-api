@@ -10,8 +10,26 @@ app.use(express.static('public'));
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 
-app.get('/api/quotes/random', (req, res, next) => {
+// get random quote
+app.get('/api/quotes/random', (req, res) => {
     const randomQuote = getRandomElement(quotes);
-    console.log(randomQuote);
-    res.send(randomQuote);
+    res.send({
+        quote: randomQuote
+    });
 });
+
+// get all quotes
+app.get('/api/quotes', (req, res) => {
+    const person = req.query.person;
+    if (person !== undefined) {
+        const quotesByPerson = quotes.filter(quote => quote.person === person);
+        res.send({
+            quotes: quotesByPerson
+        });
+    } else {
+        res.send({
+            quotes: quotes
+        });
+    }
+});
+
